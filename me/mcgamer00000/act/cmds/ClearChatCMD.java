@@ -12,11 +12,13 @@ public class ClearChatCMD extends ACTCommand {
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
+		StringBuilder message = new StringBuilder();
+		for(int i = 0; i < 100; i++) {
+			message.append("\n");
+		}
 		for(Player p: Bukkit.getOnlinePlayers()) {
 			if(!p.hasPermission(getCStr("clearchat.noClearPerm"))) {
-				for(int i = 0; i < 100; i++) {
-					p.sendMessage("\n");
-				}
+				p.sendMessage(message.toString());
 			} else {
 				p.sendMessage(cc(pl.getCmds().getString("clearchat.onNoClear")));
 			}
