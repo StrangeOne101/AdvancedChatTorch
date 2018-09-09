@@ -1,5 +1,5 @@
 # AdvancedChatTorch
-Source code for my AdvancedChatTorch plugin
+Source code for my plugin, AdvancedChatTorch
 
 https://www.spigotmc.org/resources/advancedchattorch-advanced-json-chat-formatting-free.38246/
 
