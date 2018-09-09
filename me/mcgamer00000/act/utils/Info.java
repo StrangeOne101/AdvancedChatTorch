@@ -1,6 +1,6 @@
 package me.mcgamer00000.act.utils;
 
-public class Info extends Extend{
+public class Info {
 	
 	int p;
 	String name;
@@ -15,7 +15,7 @@ public class Info extends Extend{
 	}
 	
 	public String getName() {
-		return cc(name);
+		return StringHelper.cc(name);
 	}
 	
 }

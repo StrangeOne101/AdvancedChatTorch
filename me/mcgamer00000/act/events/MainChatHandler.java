@@ -5,15 +5,18 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import me.mcgamer00000.act.AdvancedChatTorch;
 import me.mcgamer00000.act.filter.ChatFormatter;
 import me.mcgamer00000.act.filter.Colors;
 import me.mcgamer00000.act.filter.CustomPlaceholdersFilter;
 import me.mcgamer00000.act.filter.IgnoreFilter;
 import me.mcgamer00000.act.filter.JsonSender;
 import me.mcgamer00000.act.utils.ChatMessage;
-import me.mcgamer00000.act.utils.Extend;
 
-public class MainChatHandler extends Extend implements Listener {
+/*
+ * Main Chat listener for all parsing and formatting.
+ */
+public class MainChatHandler implements Listener {
 	
 	final ChatFormatter cf = new ChatFormatter();
 	final JsonSender js = new JsonSender();
@@ -23,8 +26,10 @@ public class MainChatHandler extends Extend implements Listener {
 	
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void playerChat(AsyncPlayerChatEvent e) {
+		// The method "filter" isn't very accurate of what it does.
 		boolean stop = ignore.filter(e);
 		if(stop) return;
+		AdvancedChatTorch pl = AdvancedChatTorch.getInstance();
 		pl.muted.filter(e);
 		if(e.isCancelled()) return;
 		pl.slowed.filter(e);

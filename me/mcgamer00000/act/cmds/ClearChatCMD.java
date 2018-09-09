@@ -4,10 +4,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import me.mcgamer00000.act.utils.StringHelper;
+
+/*
+ * Class for the ClearChat sub-command
+ */
 public class ClearChatCMD extends ACTCommand {
 
 	public ClearChatCMD() {
-		super("clearchat", getCStr("clearchat.perm"), 0);
+		super("clearchat", StringHelper.getCmdStr("clearchat.perm"), 0);
 	}
 
 	@Override
@@ -17,13 +22,13 @@ public class ClearChatCMD extends ACTCommand {
 			message.append("\n");
 		}
 		for(Player p: Bukkit.getOnlinePlayers()) {
-			if(!p.hasPermission(getCStr("clearchat.noClearPerm"))) {
+			if(!p.hasPermission(StringHelper.getCmdStr("clearchat.noClearPerm"))) {
 				p.sendMessage(message.toString());
 			} else {
-				p.sendMessage(cc(pl.getCmds().getString("clearchat.onNoClear")));
+				p.sendMessage(StringHelper.ccGetCmdStr("clearchat.onNoClear"));
 			}
 		}
-		Bukkit.broadcastMessage(cc(getCStr("clearchat.success").replace("%player%", sender.getName())));
+		Bukkit.broadcastMessage(StringHelper.ccGetCmdStr("clearchat.success").replace("%player%", sender.getName()));
 	}
 
 	

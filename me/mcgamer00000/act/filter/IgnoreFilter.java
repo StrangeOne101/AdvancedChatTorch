@@ -5,6 +5,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import me.mcgamer00000.act.AdvancedChatTorch;
 
+/*
+ * Parser for checking if it begins with a character that causes it to be ignored.
+ */
 public class IgnoreFilter {
 
 	public boolean filter(AsyncPlayerChatEvent e) {

@@ -8,29 +8,32 @@ import org.bukkit.command.CommandSender;
 
 import me.mcgamer00000.act.cmds.ACTCommand;
 import me.mcgamer00000.act.cmds.BukkitCommand;
-import me.mcgamer00000.act.utils.Extend;
+import me.mcgamer00000.act.utils.StringHelper;
 
-public class CmdHandler extends Extend implements CommandExecutor {
+/*
+ * CommandExecutor for the /act command.
+ */
+public class CmdHandler implements CommandExecutor {
 
 	public static ArrayList<ACTCommand> subcmds = new ArrayList<ACTCommand>();
 	
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (args.length < 1) {
-			if(sender.hasPermission(pl.getCmds().getString("mainPerm"))) {
-				sender.sendMessage(cc(pl.getCmds().getString("noArgs")).replace("<v>", "2.1.1"));
+			if(sender.hasPermission(StringHelper.getCmdStr("mainPerm"))) {
+				sender.sendMessage(StringHelper.ccGetCmdStr("noArgs").replace("<v>", "2.1.1"));
 			} else {
-				sender.sendMessage(cc(pl.getCmds().getString("noPermArgs")).replace("<v>", "2.1.1"));
+				sender.sendMessage(StringHelper.ccGetCmdStr("noPermArgs").replace("<v>", "2.1.1"));
 			}
 			return true;
 		}
 		for (ACTCommand cmd : subcmds) {
 			if (args[0].equalsIgnoreCase(cmd.getName())) {
 				if (!sender.hasPermission(cmd.getPerm())) {
-					sender.sendMessage(cc(pl.getCmds().getString(cmd.getName() + ".noPerm")));
+					sender.sendMessage(StringHelper.ccGetCmdStr(cmd.getName() + ".noPerm"));
 					return true;
 				}
 				if (args.length < cmd.getLength()) {
-					sender.sendMessage(cc(pl.getCmds().getString(cmd.getName() + ".invalidArgs")));
+					sender.sendMessage(StringHelper.ccGetCmdStr(cmd.getName() + ".invalidArgs"));
 					return true;
 				}
 				cmd.execute(sender, args);
@@ -40,17 +43,17 @@ public class CmdHandler extends Extend implements CommandExecutor {
 		for(ACTCommand cmd: BukkitCommand.cmds) {
 			if (args[0].equalsIgnoreCase(cmd.getName())) {
 				if (!sender.hasPermission(cmd.getPerm())) {
-					sender.sendMessage(cc(pl.getCmds().getString(cmd.getName() + ".noPerm")));
+					sender.sendMessage(StringHelper.ccGetCmdStr(cmd.getName() + ".noPerm"));
 					return true;
 				}
 				cmd.execute(sender, args);
 				return true;
 			}
 		}
-		if(sender.hasPermission(pl.getCmds().getString("mainPerm"))) {
-			sender.sendMessage(cc(pl.getCmds().getString("noArgs")).replace("<v>", "2.1.1"));
+		if(sender.hasPermission(StringHelper.getCmdStr("mainPerm"))) {
+			sender.sendMessage(StringHelper.ccGetCmdStr("noArgs").replace("<v>", "2.1.1"));
 		} else {
-			sender.sendMessage(cc(pl.getCmds().getString("noPermArgs")).replace("<v>", "2.1.1"));
+			sender.sendMessage(StringHelper.ccGetCmdStr("noPermArgs").replace("<v>", "2.1.1"));
 		}
 		return true;
 	}

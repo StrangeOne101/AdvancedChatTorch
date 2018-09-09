@@ -5,14 +5,19 @@ import java.util.ArrayList;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import me.mcgamer00000.act.AdvancedChatTorch;
 import me.mcgamer00000.act.utils.ChatMessage;
 import me.mcgamer00000.act.utils.ChatObject;
-import me.mcgamer00000.act.utils.Extend;
+import me.mcgamer00000.act.utils.StringHelper;
 
-public class Colors extends Extend {
+/*
+ * Formatter for replacing colors inside a message, if they have permissions.
+ */
+public class Colors {
 	
 	public void filter(AsyncPlayerChatEvent e, ChatMessage message) {
 		Player p = e.getPlayer();
+		AdvancedChatTorch pl = AdvancedChatTorch.getInstance();
 		ArrayList<String> perms = new ArrayList<>();
 		if(p.hasPermission(pl.getConfig().getString("colorperm.all"))) { perms.add("&"); } else {
 		if(p.hasPermission(pl.getConfig().getString("colorperm.black"))) { perms.add("&0"); }
@@ -41,11 +46,11 @@ public class Colors extends Extend {
 			String m = chatObj.getMessage();
 			for(String s: perms) {
 				if(s.equals("&")) {
-					m = cc(m);
+					m = StringHelper.cc(m);
 					break;
 				}
 				if(m.contains(s))
-					m = m.replace(s, cc(s));
+					m = m.replace(s, StringHelper.cc(s));
 			}
 			chatObj.setMessage(m);
 		}

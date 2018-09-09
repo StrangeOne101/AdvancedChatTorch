@@ -1,19 +1,24 @@
 package me.mcgamer00000.act.filter;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import me.mcgamer00000.act.PlaceholderAPI;
+import me.mcgamer00000.act.AdvancedChatTorch;
+import me.mcgamer00000.act.PlaceholderAPIIntegrator;
 import me.mcgamer00000.act.utils.ChatMessage;
 import me.mcgamer00000.act.utils.ChatObject;
-import me.mcgamer00000.act.utils.Extend;
 import me.mcgamer00000.act.utils.FormatInfo;
-import net.md_5.bungee.api.ChatColor;
+import me.mcgamer00000.act.utils.StringHelper;
 
-public class ChatFormatter extends Extend {
+/*
+ * Formatter for loading the chat format based on a player's group.
+ */
+public class ChatFormatter {
 	
 	public void filter(AsyncPlayerChatEvent e, ChatMessage message) {
 		Player p = e.getPlayer();
+		AdvancedChatTorch pl = AdvancedChatTorch.getInstance();
 		if (!pl.uufi.containsKey(p.getUniqueId())) return;
 		FormatInfo fi = pl.uufi.get(p.getUniqueId());
 		ChatObject msg = new ChatObject(e.getMessage());
@@ -30,10 +35,10 @@ public class ChatFormatter extends Extend {
 	}
 	
 	public String parse(Player p, String s) {
-		if (s.contains("&")) s = cc(s);
+		if (s.contains("&")) s = StringHelper.cc(s);
 		s = s.contains("%player_name%") ? s.replace("%player_name%", p.getName()) : s;
 		s = s.contains("%display_name%") ? s.replace("%display_name%", p.getDisplayName()) : s;
-		s = PlaceholderAPI.setPlaceholders(p, s);
+		s = PlaceholderAPIIntegrator.setPlaceholders(p, s);
 		return s;
 	}
 }

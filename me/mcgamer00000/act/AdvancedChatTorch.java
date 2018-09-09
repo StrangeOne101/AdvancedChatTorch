@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -19,7 +18,7 @@ import me.mcgamer00000.act.cmds.BukkitCommand;
 import me.mcgamer00000.act.cmds.ClearChatCMD;
 import me.mcgamer00000.act.cmds.MuteChatCMD;
 import me.mcgamer00000.act.cmds.ReloadCMD;
-import me.mcgamer00000.act.cmds.SlowCMD;
+import me.mcgamer00000.act.cmds.SlowChatCMD;
 import me.mcgamer00000.act.events.CmdHandler;
 import me.mcgamer00000.act.events.ConnectionHandler;
 import me.mcgamer00000.act.events.MainChatHandler;
@@ -31,7 +30,7 @@ public class AdvancedChatTorch extends JavaPlugin {
 	private static AdvancedChatTorch instance;
 	public HashMap<UUID, FormatInfo> uufi = new HashMap<UUID, FormatInfo>();
 	public List<CustomPlaceholder> customPlaceholders = new ArrayList<>();
-	public SlowCMD slowed;
+	public SlowChatCMD slowed;
 	public MuteChatCMD muted;
 	private FileConfiguration config;
 	private File configFile;
@@ -50,6 +49,13 @@ public class AdvancedChatTorch extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new ConnectionHandler(), this);
 		registerCmds();
 		for (Player p : Bukkit.getOnlinePlayers()) ConnectionHandler.add(p);
+	}
+	
+	public void onDisable() {
+		saveConfig();
+		saveCmds();
+		saveGroups();
+		saveCPs();
 	}
 
 	public void setupFiles() {
@@ -263,15 +269,11 @@ public class AdvancedChatTorch extends JavaPlugin {
 		if(getCmds().getBoolean("mutechat.enabled")) Bukkit.getPluginCommand("mutechat").setExecutor(new BukkitCommand());
 		Bukkit.getPluginCommand("act").setExecutor(new CmdHandler());
 		CmdHandler.subcmds.add(new ReloadCMD());
-		slowed = new SlowCMD();
+		slowed = new SlowChatCMD();
 		muted = new MuteChatCMD();
 		BukkitCommand.add(slowed);
 		BukkitCommand.add(muted);
 		BukkitCommand.add(new ClearChatCMD());
-	}
-	
-	public String cc(String getConfig) {
-		return ChatColor.translateAlternateColorCodes('&', getConfig);
 	}
 	
 	public static AdvancedChatTorch getInstance() {

@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import org.bukkit.entity.Player;
 
 import me.mcgamer00000.act.AdvancedChatTorch;
-import me.mcgamer00000.act.PlaceholderAPI;
+import me.mcgamer00000.act.PlaceholderAPIIntegrator;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.HoverEvent.Action;
 import net.md_5.bungee.api.chat.TextComponent;
 
-public class TextMaker extends Extend {
+public class TextMaker {
 
 	public TextComponent text;
 	
@@ -23,18 +23,18 @@ public class TextMaker extends Extend {
 			TextComponent textComp = new TextComponent(chatObject.message);
 			if(chatObject.getHover() != null) {
 				ArrayList<TextComponent> tcs = new ArrayList<TextComponent>();
-				tcs.add(new TextComponent(placeHolder(p, cc(chatObject.getHover()))));
+				tcs.add(new TextComponent(PlaceholderAPIIntegrator.setPlaceholders(p, StringHelper.cc(chatObject.getHover()))));
 				TextComponent[] bc = tcs.toArray(new TextComponent[tcs.size() - 1]);
 				textComp.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, bc));
 			}
 			if(chatObject.getColor() != null) {
-				textComp.setColor(chatObject.getColor());
+				textComp.setColor(chatObject.getColor().asBungee());
 			}
 			if(chatObject.getSuggest() != null) {
-				textComp.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, placeHolder(p, cc(chatObject.getSuggest()))));
+				textComp.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, PlaceholderAPIIntegrator.setPlaceholders(p, StringHelper.cc(chatObject.getSuggest()))));
 			}
 			if(chatObject.getRun() != null) {
-				textComp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, placeHolder(p, cc(chatObject.getRun()))));
+				textComp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, PlaceholderAPIIntegrator.setPlaceholders(p, StringHelper.cc(chatObject.getRun()))));
 			}
 			if(chatObject.isText()) {
 				setTextAttr(textComp, p);
@@ -59,7 +59,7 @@ public class TextMaker extends Extend {
 	public void addHover(TextComponent text, String s) {
 		if(s == null) return;
 		ArrayList<TextComponent> tcs = new ArrayList<TextComponent>();
-		tcs.add(new TextComponent(cc(s)));
+		tcs.add(new TextComponent(StringHelper.cc(s)));
 		TextComponent[] bc = tcs.toArray(new TextComponent[tcs.size() - 1]);
 		text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, bc));
 		return;
@@ -82,10 +82,12 @@ public class TextMaker extends Extend {
 	}
 	
 	public String getConfigString(Player p, String extra) {
+		AdvancedChatTorch pl = AdvancedChatTorch.getInstance();
 		return pl.getGroups().getString (pl.uufi.get(p.getUniqueId()).getName() + "." + extra);
 	}
 	
 	public boolean getConfigBoolean(Player p, String extra) {
+		AdvancedChatTorch pl = AdvancedChatTorch.getInstance();
 		return pl.getGroups().getBoolean(pl.uufi.get(p.getUniqueId()).getName() + "." + extra);
 	}
 	
@@ -112,12 +114,12 @@ public class TextMaker extends Extend {
 					message = message.replace("{" + id + "}", "");
 				}
 			}catch(Exception e1) {
-				pl.getLogger().info("Something went wrong when parsing for the custom placeholder, report this to the author!");
+				AdvancedChatTorch.getInstance().getLogger().info("Something went wrong when parsing for the custom placeholder, report this to the author!");
 				e1.printStackTrace();
 			}
 		}
 		s2 = message;
-		return PlaceholderAPI.setPlaceholders(p, s2);
+		return PlaceholderAPIIntegrator.setPlaceholders(p, s2);
 	}
 	
 }

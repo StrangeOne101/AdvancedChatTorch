@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-public class PlaceholderAPI {
+public class PlaceholderAPIIntegrator {
 
 	public static String setPlaceholders(Player p, String s) {
 		try {

@@ -8,10 +8,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import me.mcgamer00000.act.utils.Extend;
+import me.mcgamer00000.act.AdvancedChatTorch;
 import me.mcgamer00000.act.utils.FormatInfo;
 
-public class ConnectionHandler extends Extend implements Listener{
+/*
+ * Listener for joining and leaving to load a player's group.
+ * Handler for loading and removing a player's group.
+ */
+public class ConnectionHandler implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
@@ -20,12 +24,12 @@ public class ConnectionHandler extends Extend implements Listener{
 		
 	@EventHandler
 	public void onLeave(PlayerQuitEvent e) {
-		Player p = e.getPlayer();
-		if (pl.uufi.containsKey(p.getUniqueId())) pl.uufi.remove(p.getUniqueId());
+		remove(e.getPlayer());
 	}
 	
 	public static void add(Player p) {
 		UUID u = p.getUniqueId();
+		AdvancedChatTorch pl = AdvancedChatTorch.getInstance();
 		for (String s : pl.getGroups().getStringList("groups")) {
 			int priority = pl.getGroups().getInt(s + ".priority");
 			if(p.hasPermission(pl.getGroups().getString(s + ".perm"))) {
@@ -41,6 +45,7 @@ public class ConnectionHandler extends Extend implements Listener{
 	}
 	
 	public static void remove(Player p) {
+		AdvancedChatTorch pl = AdvancedChatTorch.getInstance();
 		if (pl.uufi.containsKey(p.getUniqueId())) pl.uufi.remove(p.getUniqueId());	
 	}
 	

@@ -1,6 +1,6 @@
 package me.mcgamer00000.act.utils;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class ChatObject {
 

@@ -6,9 +6,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import me.mcgamer00000.act.utils.Extend;
-
-public class BukkitCommand extends Extend implements CommandExecutor{
+import me.mcgamer00000.act.utils.StringHelper;
+/*
+ * 
+ * CommandExecutor of the /slowchat, /mutechat, /clearchat commands.
+ * 
+ */
+public class BukkitCommand implements CommandExecutor {
 
 	public static ArrayList<ACTCommand> cmds = new ArrayList<ACTCommand>();
 	
@@ -20,7 +24,7 @@ public class BukkitCommand extends Extend implements CommandExecutor{
 		for (ACTCommand cmd : cmds) {
 			if(command.getName().equals(cmd.getName())) {
 				if (!sender.hasPermission(cmd.getPerm())) {
-					sender.sendMessage(cc(pl.getCmds().getString(cmd.getName() + ".noPerm")));
+					sender.sendMessage(StringHelper.ccGetCmdStr(cmd.getName() + ".noPerm"));
 					return true;
 				}
 				cmd.execute(sender, args);

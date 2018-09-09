@@ -2,9 +2,12 @@ package me.mcgamer00000.act.cmds;
 
 import org.bukkit.command.CommandSender;
 
-import me.mcgamer00000.act.utils.Extend;
-
-public abstract class ACTCommand extends Extend{
+/*
+ * 
+ * Class that ClearChat, SlowChat, MuteChat, and Reload commands extend.
+ * 
+ */
+public abstract class ACTCommand {
 	String name;
 	String perm;
 	int length;

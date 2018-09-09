@@ -4,13 +4,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import me.mcgamer00000.act.AdvancedChatTorch;
+import me.mcgamer00000.act.PlaceholderAPIIntegrator;
 import me.mcgamer00000.act.utils.ChatMessage;
 import me.mcgamer00000.act.utils.ChatObject;
 import me.mcgamer00000.act.utils.CustomPlaceholder;
-import me.mcgamer00000.act.utils.Extend;
+import me.mcgamer00000.act.utils.StringHelper;
 import me.mcgamer00000.act.utils.SubPlaceholder;
 
-public class CustomPlaceholdersFilter extends Extend {
+/*
+ * Formatter for replacing custom placeholders.
+ */
+public class CustomPlaceholdersFilter {
 
 	public void filter(AsyncPlayerChatEvent e, ChatMessage message) {
 		Player p = e.getPlayer();
@@ -40,7 +44,7 @@ public class CustomPlaceholdersFilter extends Extend {
 						String hover = bestPlaceholder.getHover();
 						String suggest = bestPlaceholder.getSuggest();
 						String run = bestPlaceholder.getRun();
-						message.getChatObjects().add(i+1, new ChatObject(cc(placeHolder(p, bestPlaceholder.getValue())), hover, suggest, run));
+						message.getChatObjects().add(i+1, new ChatObject(StringHelper.cc(PlaceholderAPIIntegrator.setPlaceholders(p, bestPlaceholder.getValue())), hover, suggest, run));
 						if(bestPlaceholder.isText()) {
 							message.getChatObjects().get(i+1).setIsText(true);
 						}

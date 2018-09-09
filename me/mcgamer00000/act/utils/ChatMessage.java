@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 
-public class ChatMessage extends Extend {
+public class ChatMessage {
 
 	List<ChatObject> chatObjects = new ArrayList<ChatObject>();
 	
