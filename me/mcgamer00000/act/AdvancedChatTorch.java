@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -48,6 +49,7 @@ public class AdvancedChatTorch extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new MainChatHandler(), this);
 		Bukkit.getPluginManager().registerEvents(new ConnectionHandler(), this);
 		registerCmds();
+		checkGroups();
 		for (Player p : Bukkit.getOnlinePlayers()) ConnectionHandler.add(p);
 	}
 	
@@ -332,6 +334,15 @@ public class AdvancedChatTorch extends JavaPlugin {
 
 	public List<CustomPlaceholder> getCustomPlaceholders() {
 		return customPlaceholders;
+	}
+	
+	public void checkGroups() {
+		for(Object s: getGroups().getList("groups")) {
+			if(!getGroups().contains(s.toString())) 
+				getLogger().log(Level.SEVERE, "\nError! Group \"" + s + "\" doesn't exist!\nFix the problem, or contact the the plugin creator, MCGamer00000, on Spigot for support.\n");
+			if(!getGroups().contains(s.toString() + ".perm")) 
+				getLogger().log(Level.SEVERE, "\nError! Group \"" + s + "\" doesn't have a permission set!\nFix the problem, or contact the the plugin creator, MCGamer00000, on Spigot for support.\n");
+		}
 	}
 	
 }

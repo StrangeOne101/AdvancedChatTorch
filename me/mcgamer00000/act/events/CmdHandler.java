@@ -20,9 +20,9 @@ public class CmdHandler implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (args.length < 1) {
 			if(sender.hasPermission(StringHelper.getCmdStr("mainPerm"))) {
-				sender.sendMessage(StringHelper.ccGetCmdStr("noArgs").replace("<v>", "2.1.2"));
+				sender.sendMessage(StringHelper.ccGetCmdStr("noArgs").replace("<v>", "2.1.4"));
 			} else {
-				sender.sendMessage(StringHelper.ccGetCmdStr("noPermArgs").replace("<v>", "2.1.2"));
+				sender.sendMessage(StringHelper.ccGetCmdStr("noPermArgs").replace("<v>", "2.1.4"));
 			}
 			return true;
 		}
@@ -51,9 +51,9 @@ public class CmdHandler implements CommandExecutor {
 			}
 		}
 		if(sender.hasPermission(StringHelper.getCmdStr("mainPerm"))) {
-			sender.sendMessage(StringHelper.ccGetCmdStr("noArgs").replace("<v>", "2.1.2"));
+			sender.sendMessage(StringHelper.ccGetCmdStr("noArgs").replace("<v>", "2.1.4"));
 		} else {
-			sender.sendMessage(StringHelper.ccGetCmdStr("noPermArgs").replace("<v>", "2.1.2"));
+			sender.sendMessage(StringHelper.ccGetCmdStr("noPermArgs").replace("<v>", "2.1.4"));
 		}
 		return true;
 	}

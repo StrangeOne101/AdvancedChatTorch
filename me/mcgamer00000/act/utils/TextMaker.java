@@ -20,7 +20,7 @@ public class TextMaker {
 		BaseComponent[] baseComp = new BaseComponent[message.size()];
 		for(int i = 0; i < message.size(); i++) {
 			ChatObject chatObject = message.getChatObjects().get(i);
-			TextComponent textComp = new TextComponent(chatObject.message);
+			TextComponent textComp = new TextComponent(TextComponent.fromLegacyText(chatObject.message));
 			if(chatObject.getHover() != null) {
 				ArrayList<TextComponent> tcs = new ArrayList<TextComponent>();
 				tcs.add(new TextComponent(PlaceholderAPIIntegrator.setPlaceholders(p, StringHelper.cc(chatObject.getHover()))));

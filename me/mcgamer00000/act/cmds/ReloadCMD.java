@@ -20,14 +20,14 @@ public class ReloadCMD extends ACTCommand {
 	public void execute(CommandSender sender, String[] args) {
 		if(args.length >= 2) {
 			try {
-			Player p = Bukkit.getPlayer(args[1]);
-			if(p == null || !p.isOnline()) {
-				sender.sendMessage(StringHelper.ccGetCmdStr("reload.invalidPlayer"));
-				return;
-			}
-			ConnectionHandler.remove(p);
-			ConnectionHandler.add(p);
-			sender.sendMessage(StringHelper.ccGetCmdStr("reload.playerSuccess"));
+				Player p = Bukkit.getPlayer(args[1]);
+				if(p == null || !p.isOnline()) {
+					sender.sendMessage(StringHelper.ccGetCmdStr("reload.invalidPlayer"));
+					return;
+				}
+				ConnectionHandler.remove(p);
+				ConnectionHandler.add(p);
+				sender.sendMessage(StringHelper.ccGetCmdStr("reload.playerSuccess"));
 			} catch(Exception e) {
 				sender.sendMessage(StringHelper.ccGetCmdStr("reload.playerFail"));
 			}
@@ -37,6 +37,7 @@ public class ReloadCMD extends ACTCommand {
 			AdvancedChatTorch pl = AdvancedChatTorch.getInstance();
 			pl.setupFiles();
 			pl.registerCustomPlaceholders();
+			pl.checkGroups();
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				ConnectionHandler.remove(p);
 				ConnectionHandler.add(p);
