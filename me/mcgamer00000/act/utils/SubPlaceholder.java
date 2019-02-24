@@ -72,7 +72,7 @@ public class SubPlaceholder {
 	}
 	
 	public boolean hasPerm(Player p) {
-		return p.hasPermission(perm);
+		return perm.equals("") || p.hasPermission(perm);
 	}
 
 	public String getValue() {

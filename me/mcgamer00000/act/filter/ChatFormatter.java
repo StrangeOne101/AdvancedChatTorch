@@ -6,6 +6,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import me.mcgamer00000.act.AdvancedChatTorch;
 import me.mcgamer00000.act.PlaceholderAPIIntegrator;
+import me.mcgamer00000.act.events.ConnectionHandler;
 import me.mcgamer00000.act.utils.ChatMessage;
 import me.mcgamer00000.act.utils.ChatObject;
 import me.mcgamer00000.act.utils.FormatInfo;
@@ -20,6 +21,8 @@ public class ChatFormatter {
 		Player p = e.getPlayer();
 		AdvancedChatTorch pl = AdvancedChatTorch.getInstance();
 		if (!pl.uufi.containsKey(p.getUniqueId())) return;
+		if(pl.getConfig().getBoolean("chat.autoUpdateGroups", false))
+			ConnectionHandler.add(p);
 		FormatInfo fi = pl.uufi.get(p.getUniqueId());
 		if(pl.getGroups().getBoolean(fi.getName() + ".useChatColor")) {
 			ChatObject msg = new ChatObject(e.getMessage());
@@ -39,8 +42,6 @@ public class ChatFormatter {
 	
 	public String parse(Player p, String s) {
 		if (s.contains("&")) s = StringHelper.cc(s);
-		s = s.contains("%player_name%") ? s.replace("%player_name%", p.getName()) : s;
-		s = s.contains("%display_name%") ? s.replace("%display_name%", p.getDisplayName()) : s;
 		s = PlaceholderAPIIntegrator.setPlaceholders(p, s);
 		return s;
 	}

@@ -30,9 +30,10 @@ public class ConnectionHandler implements Listener {
 	public static void add(Player p) {
 		UUID u = p.getUniqueId();
 		AdvancedChatTorch pl = AdvancedChatTorch.getInstance();
-		for (String s : pl.getGroups().getStringList("groups")) {
+		for (String s : pl.getGroups().getKeys(false)) {
+			if(s.equals("groups")) continue;
 			int priority = pl.getGroups().getInt(s + ".priority");
-			if(p.hasPermission(pl.getGroups().getString(s + ".perm"))) {
+			if(pl.getGroups().getString(s + ".perm").equals("") || p.hasPermission(pl.getGroups().getString(s + ".perm"))) {
 				if(pl.uufi.containsKey(u)) {
 					if(pl.uufi.get(u).getPriority() < priority) {
 						pl.uufi.put(u, new FormatInfo(priority, s));

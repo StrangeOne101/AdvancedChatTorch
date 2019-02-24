@@ -123,7 +123,8 @@ public class AdvancedChatTorch extends JavaPlugin {
 
 	public void registerCustomPlaceholders() {
 		customPlaceholders.clear();
-		for(String id: this.getCPConfig().getStringList("customplaceholders")) {
+		for(String id: this.getCPConfig().getKeys(false)) {
+			if(id.equals("customplaceholders")) continue;
 			CustomPlaceholder cp = new CustomPlaceholder(id);
 			customPlaceholders.add(cp);
 		}
@@ -154,6 +155,7 @@ public class AdvancedChatTorch extends JavaPlugin {
 		c.addDefault("colorperm.italic", "act.color.italic");
 		c.addDefault("ignore.characterList", Arrays.asList("@"));
 		c.addDefault("ignore.@.perm", "act.ignoreCharacter");
+		c.addDefault("chat.autoUpdateGroups", false);
 		c.options().header("#########################\n\n# AdvancedChatTorch\n\n# Created By MCGamer00000\n\n#########################");
 		c.options().copyHeader(true);
 		c.options().copyDefaults(true);
@@ -201,66 +203,67 @@ public class AdvancedChatTorch extends JavaPlugin {
 	
 	private void registerCPs() {
 		FileConfiguration cph = getCPConfig();
-		cph.addDefault("customplaceholders", Arrays.asList("pretag", "tag", "suffix"));
-		cph.addDefault("pretag.list", Arrays.asList("donor", "normal", "staff"));
-		cph.addDefault("pretag.donor.priority", 2);
-		cph.addDefault("pretag.donor.perm", "act.ph.pretag.donor");
-		cph.addDefault("pretag.donor.value", "&7[&a&o$&7]");
-		cph.addDefault("pretag.donor.useGroupEvents", true);
-		cph.addDefault("pretag.normal.priority", 1);
-		cph.addDefault("pretag.normal.perm", "act.ph.pretag.normal");
-		cph.addDefault("pretag.normal.value", "&7[N]");
-		cph.addDefault("pretag.normal.useGroupEvents", true);
-		cph.addDefault("pretag.staff.priority", 3);
-		cph.addDefault("pretag.staff.perm", "act.ph.pretag.staff");
-		cph.addDefault("pretag.staff.value", "&7[&b&lS&7]");
-		cph.addDefault("pretag.staff.useGroupEvents", true);
-		cph.addDefault("tag.list", Arrays.asList("member", "donor"));
-		cph.addDefault("tag.member.priority", 1);
-		cph.addDefault("tag.member.perm", "act.ph.tag.member");
-		cph.addDefault("tag.member.value", "&7[&8Member&7]");
-		cph.addDefault("tag.donor.priority", 2);
-		cph.addDefault("tag.donor.perm", "act.ph.tag.donor");
-		cph.addDefault("tag.donor.value", "&7[&bDonor&7]");
-		cph.addDefault("suffix.list", Arrays.asList("member", "donor"));
+		cph.addDefault("prefix.independentTextComponent", true);
+		cph.addDefault("prefix.normal.priority", 1);
+		cph.addDefault("prefix.normal.perm", "act.prefix.normal");
+		cph.addDefault("prefix.normal.value", "&7[N]");
+		cph.addDefault("prefix.normal.useGroupEvents", true);
+		cph.addDefault("prefix.donor.priority", 2);
+		cph.addDefault("prefix.donor.perm", "act.prefix.donor");
+		cph.addDefault("prefix.donor.value", "&7[&a&o$&7]");
+		cph.addDefault("prefix.donor.useGroupEvents", true);
+		cph.addDefault("prefix.staff.priority", 3);
+		cph.addDefault("prefix.staff.perm", "act.prefix.staff");
+		cph.addDefault("prefix.staff.value", "&7[&b&lS&7]");
+		cph.addDefault("prefix.staff.useGroupEvents", true);
+		cph.addDefault("suffix.independentTextComponent", true);
 		cph.addDefault("suffix.member.priority", 1);
-		cph.addDefault("suffix.member.perm", "act.ph.suffix.member");
+		cph.addDefault("suffix.member.perm", "act.suffix.member");
 		cph.addDefault("suffix.member.value", "&7[&8Member&7]");
 		cph.addDefault("suffix.member.hoverText", "&7This player has not supported the server.\n&7Click here to message the player.");
 		cph.addDefault("suffix.member.suggestCmd", "/msg %player_name% ");
 		cph.addDefault("suffix.donor.priority", 2);
-		cph.addDefault("suffix.donor.perm", "act.ph.suffix.donor");
+		cph.addDefault("suffix.donor.perm", "act.suffix.donor");
 		cph.addDefault("suffix.donor.value", "&7[&bDonor&7]");
 		cph.addDefault("suffix.donor.hoverText", "&bThis player has supported the server.\n&7Click here to message the player.");
 		cph.addDefault("suffix.donor.suggestCmd", "/msg %player_name% ");
+		cph.addDefault("colored_name.independentTextComponent", false);
+		cph.addDefault("colored_name.red.priority", 1);
+		cph.addDefault("colored_name.red.perm", "act.name.red");
+		cph.addDefault("colored_name.red.value", "&c%player_name%");
+		cph.addDefault("colored_name.blue.priority", 2);
+		cph.addDefault("colored_name.blue.perm", "act.name.blue");
+		cph.addDefault("colored_name.blue.value", "&b%player_name%");
+		cph.addDefault("colored_name.green.priority", 3);
+		cph.addDefault("colored_name.green.perm", "act.name.green");
+		cph.addDefault("colored_name.green.value", "&a%player_name%");
 		cph.options().copyDefaults(true);
 	}
 	
 	private void registerGroups() {
 		FileConfiguration g = getGroups();
-		g.addDefault("groups", Arrays.asList("default", "donor"));
-		g.addDefault("default.priority", Integer.valueOf(1));
+		g.addDefault("default.priority", 1);
 		g.addDefault("default.perm", "act.group.default");
-		g.addDefault("default.format", "{pretag} %player_name% {suffix}&7: %message%");
+		g.addDefault("default.format", "{prefix} &f%player_name% {suffix}&7: %message%");
 		g.addDefault("default.useChatColor", true);
 		g.addDefault("default.chatColor", "7");
 		g.addDefault("default.on_click.suggest_command", Boolean.valueOf(true));
 		g.addDefault("default.on_click.suggested_command", "/m %player_name%");
 		g.addDefault("default.on_click.run_command", Boolean.valueOf(false));
-		g.addDefault("default.on_click.runned_command", "/m %player_name% hey, I noticed you were here");
+		g.addDefault("default.on_click.runned_command", "/info %player_name%");
 		g.addDefault("default.on_hover.show_text", Boolean.valueOf(true));
-		g.addDefault("default.on_hover.text_shown", "&a%player_name%\n&cYou really do need\n&ePlaceholderAPI\n&bFor this part lol");
-		g.addDefault("donor.priority", Integer.valueOf(2));
+		g.addDefault("default.on_hover.text_shown", "&a%player_name%\nInfo goes here\nFor each line.\n&a+ Colors!");
+		g.addDefault("donor.priority", 2);
 		g.addDefault("donor.perm", "act.group.donor");
-		g.addDefault("donor.format", "&e[&b&lDonor&e] {pretag} %player_name% {suffix}&7: %message%");
+		g.addDefault("donor.format", "{prefix} {colored_name} {suffix}&7: %message%");
 		g.addDefault("donor.useChatColor", true);
 		g.addDefault("donor.chatColor", "b");
 		g.addDefault("donor.on_click.suggest_command", Boolean.valueOf(true));
 		g.addDefault("donor.on_click.suggested_command", "/m %player_name%");
 		g.addDefault("donor.on_click.run_command", Boolean.valueOf(false));
-		g.addDefault("donor.on_click.runned_command", "/m %player_name% hey, I noticed you were here");
+		g.addDefault("donor.on_click.runned_command", "/info %player_name%");
 		g.addDefault("donor.on_hover.show_text", Boolean.valueOf(true));
-		g.addDefault("donor.on_hover.text_shown", "&7[&bDonor&7]\n&a%player_name%\n&cYou really do need\n&ePlaceholderAPI\n&bFor this part lol");
+		g.addDefault("donor.on_hover.text_shown", "&7[&bDonor&7]\n&a%player_name%\nInfo goes here\nFor each line.\n&a+ Colors!");
 		g.options().copyDefaults(true);
 	}
 	
@@ -336,7 +339,8 @@ public class AdvancedChatTorch extends JavaPlugin {
 	}
 	
 	public void checkGroups() {
-		for(Object s: getGroups().getList("groups")) {
+		for(Object s: getGroups().getKeys(false)) {
+			if(s.equals("groups")) continue;
 			if(!getGroups().contains(s.toString())) 
 				getLogger().log(Level.SEVERE, "\nError! Group \"" + s + "\" doesn't exist!\nFix the problem, or contact the the plugin creator, MCGamer00000, on Spigot for support.\n");
 			if(!getGroups().contains(s.toString() + ".perm")) 
