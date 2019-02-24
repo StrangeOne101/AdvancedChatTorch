@@ -8,8 +8,10 @@ import org.bukkit.entity.Player;
 public class ChatMessage {
 
 	List<ChatObject> chatObjects = new ArrayList<ChatObject>();
+	String messageSent;
 	
 	public ChatMessage(String msg, Player p) {
+		messageSent = msg;
 		chatObjects.add(new ChatObject(msg));
 	}
 

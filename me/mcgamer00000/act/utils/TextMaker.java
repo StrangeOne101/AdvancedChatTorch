@@ -20,6 +20,8 @@ public class TextMaker {
 		BaseComponent[] baseComp = new BaseComponent[message.size()];
 		for(int i = 0; i < message.size(); i++) {
 			ChatObject chatObject = message.getChatObjects().get(i);
+			if(chatObject.message.contains("%message%"))
+				chatObject.message = chatObject.message.replace("%message%", message.messageSent);
 			TextComponent textComp = new TextComponent(TextComponent.fromLegacyText(chatObject.message));
 			if(chatObject.getHover() != null) {
 				ArrayList<TextComponent> tcs = new ArrayList<TextComponent>();

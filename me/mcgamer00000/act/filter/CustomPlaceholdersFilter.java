@@ -19,16 +19,12 @@ public class CustomPlaceholdersFilter {
 	public void filter(AsyncPlayerChatEvent e, ChatMessage message) {
 		Player p = e.getPlayer();
 		for(CustomPlaceholder cp: AdvancedChatTorch.getInstance().getCustomPlaceholders()) {
-			int max = ((AdvancedChatTorch.getInstance().getConfig().getBoolean("allowCPMessages"))?message.size():((message.size() == 1) ? 1 : message.size()-1));
-			for(int i = 0; i < max; i++) {
+			for(int i = 0; i < message.size(); i++) {
 				ChatObject chatObj = message.get(i);
 				String objMsg = chatObj.getMessage();
 				if(!objMsg.contains("{" + cp.getId() + "}")) continue;
-				int i2 = objMsg.indexOf("{" + cp.getId() + "}");
-				int i3 = i2 + ("{" + cp.getId() + "}").length();
-				chatObj.setMessage(objMsg.substring(0, i2));
+				SubPlaceholder bestPlaceholder = null;
 				try {
-					SubPlaceholder bestPlaceholder = null;;
 					for(SubPlaceholder subPlaceholder: cp.getPlaceholders()) {
 						if(subPlaceholder.hasPerm(p)) {
 							if(bestPlaceholder == null) {
@@ -40,6 +36,16 @@ public class CustomPlaceholdersFilter {
 							}
 						}
 					}
+				}catch(Exception e1) {
+					AdvancedChatTorch.getInstance().getLogger().info("Something went wrong when parsing for the custom placeholder, report this to the author!");
+					e1.printStackTrace();
+				}
+				if(cp.isNotIndependant()) {
+					chatObj.setMessage(objMsg.replace("{" + cp.getId() + "}", StringHelper.cc(PlaceholderAPIIntegrator.setPlaceholders(p, bestPlaceholder.getValue()))));
+				} else {
+					int i2 = objMsg.indexOf("{" + cp.getId() + "}");
+					int i3 = i2 + ("{" + cp.getId() + "}").length();
+					chatObj.setMessage(objMsg.substring(0, i2));
 					if(bestPlaceholder != null) {
 						String hover = bestPlaceholder.getHover();
 						String suggest = bestPlaceholder.getSuggest();
@@ -51,12 +57,8 @@ public class CustomPlaceholdersFilter {
 					} else {
 						message.getChatObjects().add(i+1, new ChatObject(""));
 					}
-				}catch(Exception e1) {
-					AdvancedChatTorch.getInstance().getLogger().info("Something went wrong when parsing for the custom placeholder, report this to the author!");
-					e1.printStackTrace();
+					message.getChatObjects().add(i+2, new ChatObject(objMsg.substring(i3)));
 				}
-				message.getChatObjects().add(i+2, new ChatObject(objMsg.substring(i3)));
-				max = ((AdvancedChatTorch.getInstance().getConfig().getBoolean("allowCPMessages"))?message.size():((message.size() == 1) ? 1 : message.size()-1));
 			}
 		}
 	}

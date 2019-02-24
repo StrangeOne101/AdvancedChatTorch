@@ -152,7 +152,6 @@ public class AdvancedChatTorch extends JavaPlugin {
 		c.addDefault("colorperm.strikethr", "act.color.strikethrough");
 		c.addDefault("colorperm.underline", "act.color.underline");
 		c.addDefault("colorperm.italic", "act.color.italic");
-		c.addDefault("allowCPMessages", false);
 		c.addDefault("ignore.characterList", Arrays.asList("@"));
 		c.addDefault("ignore.@.perm", "act.ignoreCharacter");
 		c.options().header("#########################\n\n# AdvancedChatTorch\n\n# Created By MCGamer00000\n\n#########################");
