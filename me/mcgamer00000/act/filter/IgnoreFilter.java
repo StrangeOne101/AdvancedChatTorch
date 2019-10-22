@@ -12,7 +12,7 @@ public class IgnoreFilter {
 
 	public boolean filter(AsyncPlayerChatEvent e) {
 		FileConfiguration config =  AdvancedChatTorch.getInstance().getConfig();
-		
+		if(!config.getBoolean("ignore.enabled")) return false;
 		if(!config.contains("ignore.characterList")) return false;
 		for(Object characterObj: config.getList("ignore.characterList")) {
 			if(!(characterObj instanceof String))

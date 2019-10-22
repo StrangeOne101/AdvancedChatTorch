@@ -25,7 +25,7 @@ public class ChatFormatter {
 			ConnectionHandler.add(p);
 		FormatInfo fi = pl.uufi.get(p.getUniqueId());
 		if(pl.getGroups().getBoolean(fi.getName() + ".useChatColor")) {
-			ChatObject msg = new ChatObject(e.getMessage());
+			ChatObject msg = new ChatObject("%message%");
 			msg.setColor(ChatColor.getByChar(pl.getGroups().getString(fi.getName() + ".chatColor").toCharArray()[0]));
 			String total = parse(p, pl.getGroups().getString(fi.getName() + ".format"));
 			int i = total.indexOf("%message%");

@@ -40,7 +40,7 @@ public class CustomPlaceholdersFilter {
 					AdvancedChatTorch.getInstance().getLogger().info("Something went wrong when parsing for the custom placeholder, report this to the author!");
 					e1.printStackTrace();
 				}
-				if(cp.isNotIndependent()) {
+				if(cp.isNotIndependent() && bestPlaceholder != null) {
 					chatObj.setMessage(objMsg.replace("{" + cp.getId() + "}", StringHelper.cc(PlaceholderAPIIntegrator.setPlaceholders(p, bestPlaceholder.getValue()))));
 				} else {
 					int i2 = objMsg.indexOf("{" + cp.getId() + "}");

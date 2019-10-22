@@ -14,15 +14,25 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public class TextMaker {
 
+	private ChatMessage message;
 	public TextComponent text;
+	private Player p;
 	
 	public TextMaker(ChatMessage message, Player p) {
+		this.p = p;
+		this.message = message;
+	}
+	
+	// Only used whenever relational placeholders is disabled
+	public void convertMessageToComponents() {
 		BaseComponent[] baseComp = new BaseComponent[message.size()];
 		for(int i = 0; i < message.size(); i++) {
 			ChatObject chatObject = message.getChatObjects().get(i);
-			if(chatObject.message.contains("%message%"))
-				chatObject.message = chatObject.message.replace("%message%", message.messageSent);
-			TextComponent textComp = new TextComponent(TextComponent.fromLegacyText(chatObject.message));
+			String msg = chatObject.message;
+			msg = PlaceholderAPIIntegrator.setPlaceholders(p, msg);
+			if(msg.contains("%message%"))
+				msg = msg.replace("%message%", message.messageSent);
+			TextComponent textComp = new TextComponent(TextComponent.fromLegacyText(msg));
 			if(chatObject.getHover() != null) {
 				ArrayList<TextComponent> tcs = new ArrayList<TextComponent>();
 				tcs.add(new TextComponent(PlaceholderAPIIntegrator.setPlaceholders(p, StringHelper.cc(chatObject.getHover()))));
@@ -81,6 +91,39 @@ public class TextMaker {
 	
 	public TextComponent getText() {
 		return text;
+	}
+	
+	// Only used when relational placeholders is enabled. (If enabled, you have to compute placeholders for all players, not just once)
+	public TextComponent getRelationalText(Player to) {
+		BaseComponent[] baseComp = new BaseComponent[message.size()];
+		for(int i = 0; i < message.size(); i++) {
+			ChatObject chatObject = message.getChatObjects().get(i);
+			String msg = chatObject.message;
+			msg = PlaceholderAPIIntegrator.setBothPlaceholders(p, to, msg);
+			if(msg.contains("%message%"))
+				msg = msg.replace("%message%", message.messageSent);
+			TextComponent textComp = new TextComponent(TextComponent.fromLegacyText(msg));
+			if(chatObject.getHover() != null) {
+				ArrayList<TextComponent> tcs = new ArrayList<TextComponent>();
+				tcs.add(new TextComponent(PlaceholderAPIIntegrator.setBothPlaceholders(p, to, StringHelper.cc(chatObject.getHover()))));
+				TextComponent[] bc = tcs.toArray(new TextComponent[tcs.size() - 1]);
+				textComp.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, bc));
+			}
+			if(chatObject.getColor() != null) {
+				textComp.setColor(chatObject.getColor().asBungee());
+			}
+			if(chatObject.getSuggest() != null) {
+				textComp.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, PlaceholderAPIIntegrator.setBothPlaceholders(p, to, StringHelper.cc(chatObject.getSuggest()))));
+			}
+			if(chatObject.getRun() != null) {
+				textComp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, PlaceholderAPIIntegrator.setBothPlaceholders(p, to, StringHelper.cc(chatObject.getRun()))));
+			}
+			if(chatObject.isText()) {
+				setTextAttr(textComp, p);
+			}
+			baseComp[i] = textComp;
+		}
+		return new TextComponent(baseComp);
 	}
 	
 	public String getConfigString(Player p, String extra) {

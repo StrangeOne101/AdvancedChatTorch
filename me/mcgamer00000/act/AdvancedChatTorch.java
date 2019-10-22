@@ -133,6 +133,7 @@ public class AdvancedChatTorch extends JavaPlugin {
 	private void registerConfig() {
 		FileConfiguration c = getConfig();
 		c.addDefault("colorperm.all", "act.color.all");
+		c.addDefault("colorperm.allColors", "act.color.allcolors");
 		c.addDefault("colorperm.black", "act.color.black");
 		c.addDefault("colorperm.dark_blue", "act.color.dark_blue");
 		c.addDefault("colorperm.dark_green", "act.color.dark_green");
@@ -143,7 +144,7 @@ public class AdvancedChatTorch extends JavaPlugin {
 		c.addDefault("colorperm.light_gray", "act.color.light_gray");
 		c.addDefault("colorperm.dark_gray", "act.color.dark_gray");
 		c.addDefault("colorperm.light_blue", "act.color.light_blue");
-		c.addDefault("colorperm.light_green", "act.color.ligh_green");
+		c.addDefault("colorperm.light_green", "act.color.light_green");
 		c.addDefault("colorperm.light_blue", "act.color.light_blue");
 		c.addDefault("colorperm.light_red", "act.color.light_red");
 		c.addDefault("colorperm.magenta", "act.color.magenta");
@@ -153,9 +154,13 @@ public class AdvancedChatTorch extends JavaPlugin {
 		c.addDefault("colorperm.strikethr", "act.color.strikethrough");
 		c.addDefault("colorperm.underline", "act.color.underline");
 		c.addDefault("colorperm.italic", "act.color.italic");
+		c.addDefault("colorperm.magic", "act.color.magic");
+		c.addDefault("ignore.enabled", false);
 		c.addDefault("ignore.characterList", Arrays.asList("@"));
 		c.addDefault("ignore.@.perm", "act.ignoreCharacter");
 		c.addDefault("chat.autoUpdateGroups", false);
+		c.addDefault("chat.enableRelationalPlaceholders", false);
+		c.addDefault("chat.useOldWay", false);
 		c.options().header("#########################\n\n# AdvancedChatTorch\n\n# Created By MCGamer00000\n\n#########################");
 		c.options().copyHeader(true);
 		c.options().copyDefaults(true);

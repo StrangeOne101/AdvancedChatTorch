@@ -26,7 +26,7 @@ public class MainChatHandler implements Listener {
 	
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void playerChat(AsyncPlayerChatEvent e) {
-		// The method "filter" isn't very accurate of what it does.
+		// The method "filter" isn't very accurate of what it does. Most just edits the data, and only some actually cancel the message
 		boolean stop = ignore.filter(e);
 		if(stop) return;
 		AdvancedChatTorch pl = AdvancedChatTorch.getInstance();

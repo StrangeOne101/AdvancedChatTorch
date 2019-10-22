@@ -18,11 +18,29 @@ public class JsonSender {
 		AdvancedChatTorch pl = AdvancedChatTorch.getInstance();
 		if(!pl.uufi.containsKey(e.getPlayer().getUniqueId())) return;
 		TextMaker tm = new TextMaker(message, e.getPlayer());
+		boolean relationalPlaceholders = AdvancedChatTorch.getInstance().getConfig().getBoolean("chat.enableRelationalPlaceholders");
+		if(!relationalPlaceholders)
+			tm.convertMessageToComponents();
 		for(Player p: e.getRecipients()) {
-			p.spigot().sendMessage(tm.getText());
+			if(relationalPlaceholders)
+				p.spigot().sendMessage(tm.getRelationalText(p));
+			else
+				p.spigot().sendMessage(tm.getText());
 		}
-        Bukkit.getConsoleSender().sendMessage("[ACT Chat] " + tm.getText().toPlainText());
-        e.setCancelled(true);
+        if(pl.getConfig().getBoolean("chat.useOldWay")) {
+    		if(relationalPlaceholders)
+    			Bukkit.getConsoleSender().sendMessage("[ACT Chat] " + tm.getRelationalText(e.getPlayer()).toPlainText());
+    		else
+    			Bukkit.getConsoleSender().sendMessage("[ACT Chat] " + tm.getText().toPlainText());
+        	e.setCancelled(true);
+        } else {
+    		if(relationalPlaceholders)
+        		e.setMessage(tm.getRelationalText(e.getPlayer()).toPlainText());
+        	else
+        		e.setMessage(tm.getText().toPlainText());
+        	e.setFormat("%2$s");
+        	e.getRecipients().clear();
+        }
 	}
 	
 	
