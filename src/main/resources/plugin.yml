@@ -4,7 +4,7 @@ description: A Chat Formatting Plugin
 name: AdvancedChatTorch
 author: MCGamer00000
 softdepend: [PlaceholderAPI]
-
+api-version: 1.16
 commands:
   act:
     description: "Main Advanced Chat Torch CMD"
