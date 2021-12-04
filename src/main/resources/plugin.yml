@@ -1,0 +1,76 @@
+main: me.mcgamer00000.act.AdvancedChatTorch
+version: '${project.version}'
+description: A Chat Formatting Plugin
+name: AdvancedChatTorch
+author: MCGamer00000
+softdepend: [PlaceholderAPI]
+
+commands:
+  act:
+    description: "Main Advanced Chat Torch CMD"
+  slowchat:
+    description: "Slow chat down for the specified time in config"
+  mutechat:
+    description: "Mute all chat excluding administrators"
+  clearchat:
+    description: "Clear all chat"
+
+permissions:
+  act.*:
+    description: "Perm for All ACT Commands"
+  act.cmd:
+    description: "Be able to see /act's full description"
+  act.reload:
+    description: "Be able to do /act reload"
+  act.clearchat:
+    description: "Be able to do /clearchat"
+  act.clearchat.bypass:
+    description: "Be able to bypass /clearchat"
+  act.slowchat:
+    description: "Be able to do /slowchat"
+  act.slowchat.bypass:
+    description: "Be able to bypass /slowchat"
+  act.mutechat:
+    description: "Be able to do /mutechat"
+  act.mutechat.bypass:
+    description: "Be able to bypass /mutechat"
+  act.color.all:
+    description: "Use all chat characters"
+  act.color.black:
+    description: "Use the black chat character"
+  act.color.dark_blue:
+    description: "Use the dark blue chat character"
+  act.color.dark_green:
+    description: "Use the dark green chat character"
+  act.color.aqua:
+    description: "Use the aqua chat character"
+  act.color.dark_red:
+    description: "Use the dark red chat character"
+  act.color.purple:
+    description: "Use the purple chat character"
+  act.color.gold:
+    description: "Use the gold chat character"
+  act.color.light_gray:
+    description: "Use the light gray chat character"
+  act.color.dark_gray:
+    description: "Use the dark gray chat character"
+  act.color.light_blue:
+    description: "Use the light blue chat character"
+  act.color.light_green:
+    description: "Use the light green chat character"
+  act.color.light_red:
+    description: "Use the light red chat character"
+  act.color.magenta:
+    description: "Use the magenta chat character"
+  act.color.yellow:
+    description: "Use the yellow chat character"
+  act.color.white:
+    description: "Use the white chat character"
+  act.color.bold:
+    description: "Use the bold chat character"
+  act.color.strikethrough:
+    description: "Use the strikethrough chat character"
+  act.color.underline:
+    description: "Use the underline chat character"
+  act.color.italic:
+    description: "Use the italic chat character"

@@ -11,7 +11,7 @@ public class StringHelper {
 	private StringHelper() {}
 	
 	public static String cc(String s) {
-		return ChatColor.translateAlternateColorCodes('&', s);
+		return ChatColor.translateAlternateColorCodes('&', s).replaceAll("\\\n", "\n");
 	}
 	
 	public static String setPlaceholders(Player p, String s) {

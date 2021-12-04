@@ -2,6 +2,8 @@ package me.mcgamer00000.act.utils;
 
 import java.util.ArrayList;
 
+import net.md_5.bungee.api.chat.hover.content.Text;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import me.mcgamer00000.act.AdvancedChatTorch;
@@ -34,10 +36,8 @@ public class TextMaker {
 				msg = msg.replace("%message%", message.messageSent);
 			TextComponent textComp = new TextComponent(TextComponent.fromLegacyText(msg));
 			if(chatObject.getHover() != null) {
-				ArrayList<TextComponent> tcs = new ArrayList<TextComponent>();
-				tcs.add(new TextComponent(PlaceholderAPIIntegrator.setPlaceholders(p, StringHelper.cc(chatObject.getHover()))));
-				TextComponent[] bc = tcs.toArray(new TextComponent[tcs.size() - 1]);
-				textComp.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, bc));
+				BaseComponent[] components = TextComponent.fromLegacyText(PlaceholderAPIIntegrator.setPlaceholders(p, StringHelper.cc(chatObject.getHover())), ChatColor.WHITE.asBungee());
+				textComp.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, new Text(components)));
 			}
 			if(chatObject.getColor() != null) {
 				textComp.setColor(chatObject.getColor().asBungee());
@@ -70,10 +70,9 @@ public class TextMaker {
 
 	public void addHover(TextComponent text, String s) {
 		if(s == null) return;
-		ArrayList<TextComponent> tcs = new ArrayList<TextComponent>();
-		tcs.add(new TextComponent(StringHelper.cc(s)));
-		TextComponent[] bc = tcs.toArray(new TextComponent[tcs.size() - 1]);
-		text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, bc));
+
+		BaseComponent[] components = TextComponent.fromLegacyText(StringHelper.cc(s), ChatColor.WHITE.asBungee());
+		text.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, new Text(components)));
 		return;
 	}
 	
@@ -104,10 +103,8 @@ public class TextMaker {
 				msg = msg.replace("%message%", message.messageSent);
 			TextComponent textComp = new TextComponent(TextComponent.fromLegacyText(msg));
 			if(chatObject.getHover() != null) {
-				ArrayList<TextComponent> tcs = new ArrayList<TextComponent>();
-				tcs.add(new TextComponent(PlaceholderAPIIntegrator.setBothPlaceholders(p, to, StringHelper.cc(chatObject.getHover()))));
-				TextComponent[] bc = tcs.toArray(new TextComponent[tcs.size() - 1]);
-				textComp.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, bc));
+				BaseComponent[] components = TextComponent.fromLegacyText(PlaceholderAPIIntegrator.setPlaceholders(p, StringHelper.cc(chatObject.getHover())), ChatColor.WHITE.asBungee());
+				textComp.setHoverEvent(new HoverEvent(Action.SHOW_TEXT, new Text(components)));
 			}
 			if(chatObject.getColor() != null) {
 				textComp.setColor(chatObject.getColor().asBungee());
