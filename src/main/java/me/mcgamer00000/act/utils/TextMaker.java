@@ -3,7 +3,6 @@ package me.mcgamer00000.act.utils;
 import java.util.ArrayList;
 
 import net.md_5.bungee.api.chat.hover.content.Text;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -142,7 +141,7 @@ public class TextMaker {
 			try {
 				SubPlaceholder bestPlaceholder = null;;
 				for(SubPlaceholder subPlaceholder: cp.getPlaceholders()) {
-					if(subPlaceholder.hasPerm(p)) {
+					if(subPlaceholder.hasPerm(p) && (subPlaceholder.getLogic() == null || subPlaceholder.getLogic().check(p))) {
 						if(bestPlaceholder == null)
 							bestPlaceholder = subPlaceholder;
 						else {

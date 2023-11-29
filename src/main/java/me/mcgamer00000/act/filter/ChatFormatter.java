@@ -32,6 +32,7 @@ public class ChatFormatter {
 			int i2 = i+"%message%".length();
 			String prefix = total.substring(0, i);
 			message.get(0).setMessage(prefix);
+			e.setFormat(total.replace("%message%", "%2$s"));
 			message.getChatObjects().add(msg);
 			if(i2+1<=total.length())
 				message.getChatObjects().add(new ChatObject(total.substring(i2+1)));

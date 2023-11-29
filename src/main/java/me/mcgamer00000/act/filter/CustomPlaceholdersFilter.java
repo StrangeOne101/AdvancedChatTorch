@@ -26,7 +26,7 @@ public class CustomPlaceholdersFilter {
 				SubPlaceholder bestPlaceholder = null;
 				try {
 					for(SubPlaceholder subPlaceholder: cp.getPlaceholders()) {
-						if(subPlaceholder.hasPerm(p)) {
+						if(subPlaceholder.hasPerm(p) && (subPlaceholder.getLogic() == null || subPlaceholder.getLogic().check(p))) {
 							if(bestPlaceholder == null) {
 								bestPlaceholder = subPlaceholder;
 							} else {

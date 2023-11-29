@@ -24,7 +24,7 @@ public class MainChatHandler implements Listener {
 	final Colors c = new Colors();
 	final IgnoreFilter ignore = new IgnoreFilter();
 	
-	@EventHandler(priority=EventPriority.HIGHEST)
+	@EventHandler(priority=EventPriority.HIGH)
 	public void playerChat(AsyncPlayerChatEvent e) {
 		// The method "filter" isn't very accurate of what it does. Most just edits the data, and only some actually cancel the message
 		boolean stop = ignore.filter(e);

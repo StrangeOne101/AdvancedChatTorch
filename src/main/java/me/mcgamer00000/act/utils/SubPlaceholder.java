@@ -9,6 +9,7 @@ public class SubPlaceholder {
 	int priority;
 	String perm;
 	String value;
+	PlaceholderLogic logic;
 	String hover;
 	String suggest;
 	String run;
@@ -32,6 +33,13 @@ public class SubPlaceholder {
 		if(section.contains("useGroupEvents")) {
 			if(section.getBoolean("useGroupEvents")) 
 				isText = true;
+		}
+		if (section.contains("logic")) {
+			String placeholder = section.getString("logic.placeholder", "");
+			if (!placeholder.contains("%")) placeholder = "%" + placeholder + "%";
+			String value = section.getString("logic.value", "");
+			String operation = section.getString("logic.operation", "");
+			logic = new PlaceholderLogic(section.getParent().getName(), placeholder, operation, value);
 		}
 	}
 
@@ -61,6 +69,10 @@ public class SubPlaceholder {
 
 	public String getName() {
 		return name;
+	}
+
+	public PlaceholderLogic getLogic() {
+		return logic;
 	}
 
 	public int getPriority() {
