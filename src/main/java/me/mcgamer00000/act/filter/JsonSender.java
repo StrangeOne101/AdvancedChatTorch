@@ -34,12 +34,14 @@ public class JsonSender {
     			Bukkit.getConsoleSender().sendMessage("[ACT Chat] " + tm.getText().toPlainText());
         	e.setCancelled(true);
         } else {
-    		if(relationalPlaceholders)
+    		/*if(relationalPlaceholders)
         		e.setMessage(tm.getRelationalText(e.getPlayer()).toPlainText());
         	else
-        		e.setMessage(tm.getText().toPlainText());
-        	e.setFormat("%2$s");
-        	e.getRecipients().clear();
+        		e.setMessage(tm.getText().toPlainText());*/
+        	//e.setFormat(message.get(0) + "%2$s");
+			e.setFormat(tm.getFormat());
+
+			e.getRecipients().clear();
         }
 	}
 	

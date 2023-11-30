@@ -18,6 +18,7 @@ public class TextMaker {
 
 	private ChatMessage message;
 	public TextComponent text;
+	public String format;
 	private Player p;
 	
 	public TextMaker(ChatMessage message, Player p) {
@@ -32,6 +33,7 @@ public class TextMaker {
 			ChatObject chatObject = message.getChatObjects().get(i);
 			String msg = chatObject.message;
 			msg = PlaceholderAPIIntegrator.setPlaceholders(p, msg);
+			this.format = msg.replace("%message%", "%2$s");
 			if(msg.contains("%message%"))
 				msg = msg.replace("%message%", message.messageSent);
 			TextComponent textComp = new TextComponent(TextComponent.fromLegacyText(StringHelper.cc(msg)));
@@ -91,7 +93,11 @@ public class TextMaker {
 	public TextComponent getText() {
 		return text;
 	}
-	
+
+	public String getFormat() {
+		return format;
+	}
+
 	// Only used when relational placeholders is enabled. (If enabled, you have to compute placeholders for all players, not just once)
 	public TextComponent getRelationalText(Player to) {
 		BaseComponent[] baseComp = new BaseComponent[message.size()];

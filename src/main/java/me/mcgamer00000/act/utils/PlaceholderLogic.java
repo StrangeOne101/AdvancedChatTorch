@@ -70,7 +70,7 @@ public class PlaceholderLogic {
         if (placeholder == null) return false;
 
 
-        if (this.operation.predicate.test(PlaceholderAPI.setPlaceholders(player, placeholder), this.value)) {
+        if (this.operation.predicate.test(PlaceholderAPI.setPlaceholders(player, placeholder), this.value.contains("%") ? PlaceholderAPI.setPlaceholders(player, this.value) : this.value)) {
             return true;
         }
 
