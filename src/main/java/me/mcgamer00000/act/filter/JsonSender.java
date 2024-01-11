@@ -39,7 +39,7 @@ public class JsonSender {
         	else
         		e.setMessage(tm.getText().toPlainText());*/
         	//e.setFormat(message.get(0) + "%2$s");
-			e.setFormat(tm.getFormat());
+			e.setFormat(tm.getFormatCombined());
 
 			e.getRecipients().clear();
         }

@@ -273,10 +273,16 @@ public class AdvancedChatTorch extends JavaPlugin {
 	}
 	
 	private void registerCmds() {
-		if(getCmds().getBoolean("clearchat.enabled")) Bukkit.getPluginCommand("clearchat").setExecutor(new BukkitCommand());
-		if(getCmds().getBoolean("slowchat.enabled")) Bukkit.getPluginCommand("slowchat").setExecutor(new BukkitCommand());
-		if(getCmds().getBoolean("mutechat.enabled")) Bukkit.getPluginCommand("mutechat").setExecutor(new BukkitCommand());
-		Bukkit.getPluginCommand("act").setExecutor(new CmdHandler());
+		if(getCmds().getBoolean("clearchat.enabled")) {
+			Bukkit.getPluginCommand("advancedchattorch:clearchat").setExecutor(new BukkitCommand());
+		}
+		if(getCmds().getBoolean("slowchat.enabled")) {
+			Bukkit.getPluginCommand("advancedchattorch:slowchat").setExecutor(new BukkitCommand());
+		}
+		if(getCmds().getBoolean("mutechat.enabled")) {
+			Bukkit.getPluginCommand("advancedchattorch:mutechat").setExecutor(new BukkitCommand());
+		}
+		Bukkit.getPluginCommand("advancedchattorch:act").setExecutor(new CmdHandler());
 		CmdHandler.subcmds.add(new ReloadCMD());
 		slowed = new SlowChatCMD();
 		muted = new MuteChatCMD();
