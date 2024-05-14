@@ -1,15 +1,10 @@
 package me.mcgamer00000.act.utils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import me.clip.placeholderapi.PlaceholderAPIPlugin;
-import me.clip.placeholderapi.PlaceholderHook;
 import me.mcgamer00000.act.AdvancedChatTorch;
 import org.bukkit.entity.Player;
 
 import java.util.function.BiPredicate;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public class PlaceholderLogic {
 
@@ -21,10 +16,10 @@ public class PlaceholderLogic {
         EQUALS(Object::equals,"equals", "==", ""),
         NOT_EQUALS((o, v) -> !o.equals(v),"not_equals", "notequals", "not", "!=");
 
-        private String[] aliases;
-        private BiPredicate predicate;
+        private final String[] aliases;
+        private final BiPredicate<Object, Object> predicate;
 
-        Operation(BiPredicate predicate, String... aliases) {
+        Operation(BiPredicate<Object, Object> predicate, String... aliases) {
             this.predicate = predicate;
             this.aliases = aliases;
         }
@@ -61,7 +56,6 @@ public class PlaceholderLogic {
             } catch (NumberFormatException e) {
                 AdvancedChatTorch.getInstance().getLogger().warning("Custom placeholder '" + parent + "' logic has an invalid value for operation type " + this.operation.name() + "!");
                 this.placeholder = null;
-                return;
             }
         }
     }
@@ -69,12 +63,7 @@ public class PlaceholderLogic {
     public boolean check(Player player) {
         if (placeholder == null) return false;
 
-
-        if (this.operation.predicate.test(PlaceholderAPI.setPlaceholders(player, placeholder), this.value.contains("%") ? PlaceholderAPI.setPlaceholders(player, this.value) : this.value)) {
-            return true;
-        }
-
-        return false;
+        return this.operation.predicate.test(PlaceholderAPI.setPlaceholders(player, placeholder), this.value.contains("%") ? PlaceholderAPI.setPlaceholders(player, this.value) : this.value);
     }
 
 }

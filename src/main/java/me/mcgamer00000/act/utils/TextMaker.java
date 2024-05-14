@@ -1,7 +1,5 @@
 package me.mcgamer00000.act.utils;
 
-import java.util.ArrayList;
-
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
